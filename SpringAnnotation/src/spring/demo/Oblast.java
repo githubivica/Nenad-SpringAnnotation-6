@@ -1,9 +1,5 @@
 package spring.demo;
 
-public class Oblast {
-	
-	public String getOblast() {
-		return "Ovo je moja oblast rada!";
-	}
-
+public interface Oblast {
+	public String getOblast();
 }

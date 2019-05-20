@@ -1,45 +1,44 @@
 package spring.demo;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("profaMatematike")  // U zagradi je bean id, sami smo imenovali bean
+@Scope("prototype")			// Prototype scope
 public class ProfesorMatematike implements Profesor {
-	
-	private String ime;
 	
 	private Oblast oblast;
 	
 	
-	public ProfesorMatematike(Oblast oblast) {
+	@Autowired // Constructor injection
+	public ProfesorMatematike(@Qualifier("primenjenaOblast")Oblast oblast) {
 		super();
 		this.oblast = oblast;
 	}
-	
-	public ProfesorMatematike(String ime) {
-		super();
-		this.ime = ime;
-	}
-	
-	public ProfesorMatematike(String ime, Oblast oblast) {
-		super();
-		this.ime = ime;
-		this.oblast = oblast;
-	}
 
-	public String getIme() {
-		return ime;
-	}
-
-	public void setIme(String ime) {
-		this.ime = ime;
-	}
 
 	@Override
 	public String getGreeting() {
-		return "Pozdrav od profesora matematike " + getIme();
+		return "Pozdrav od profesora matematike ";
 	}
 	@Override
 	public String getOblastRada() {
 		return oblast.getOblast();
 	}
 	
+	@PostConstruct
+	public void inicijalizacija() {
+		System.out.println("Ovo je post init metod");
+	}
+	@PreDestroy
+	public void unisti() {
+		System.out.println("Ovo je pre destroy"); 
+	}
 	
 	
 }
